@@ -5,7 +5,8 @@ import {
   newOrderTableReducer,
   sidebarReducer,
   themeReducer,
-  customizerReducer
+  customizerReducer,
+  pieChartReducer
 } from '../redux/reducers/index';
 
 const reducer = combineReducers({
@@ -14,7 +15,8 @@ const reducer = combineReducers({
   sidebar: sidebarReducer,
   cryptoTable: cryptoTableReducer,
   newOrder: newOrderTableReducer,
-  customizer: customizerReducer
+  customizer: customizerReducer,
+  select:pieChartReducer
 });
 const store = (window.devToolsExtension
   ? window.devToolsExtension()(createStore)

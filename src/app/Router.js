@@ -73,6 +73,7 @@ import FitnessDashboard from '../containers/dashboards/fitness/FitnessDashboard'
 import DefaultDashboard from '../containers/dashboards/default/DefaultDashboard';
 import ECommerceDashboard from '../containers/dashboards/e-commerce/ECommerceDashboard';
 import CryptoDashboard from '../containers/dashboards/crypto/CryptoDashboard';
+import Ideas from '../containers/repository/Ideas';
 
 import Mail from '../containers/mail/Mail';
 
@@ -116,6 +117,7 @@ const wrappedRoutes = () => (
       <Route path='/dashboard_default' component={DefaultDashboard}/>
       <Route path='/dashboard_e_commerce' component={Commerce}/>
       <Route path='/dashboard_fitness' component={FitnessDashboard}/>
+      <Route path='/ideas' component={Ideas}/>
       <Route path='/dashboard_crypto' component={Crypto}/>
       <Route path='/ui' component={UI}/>
       <Route path='/mail' component={Mail}/>

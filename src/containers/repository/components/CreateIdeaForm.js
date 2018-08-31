@@ -3,8 +3,8 @@ import {Card, CardBody, Col, Button, ButtonToolbar} from 'reactstrap';
 import {Field, reduxForm} from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import renderMultiSelectField from '../../../../components/form/MultiSelect';
-import renderCheckBoxField from '../../../../components/form/CheckBox';
+import renderMultiSelectField from '../../../components/form/MultiSelect';
+import renderCheckBoxField from '../../../components/form/CheckBox';
 
 const renderTextField = ({input, label, meta: {touched, error}, children, select}) => (
     <TextField

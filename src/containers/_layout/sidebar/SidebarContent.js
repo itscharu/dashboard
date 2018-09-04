@@ -36,7 +36,7 @@ class SidebarContent extends PureComponent {
             </li>
           </SidebarCategory>
 
-          <SidebarLink title='Sponsorship' icon='bullhorn' route='/sponsorship' onClick={this.hideSidebar}/>
+          <SidebarLink title='Campaign' icon='bullhorn' route='/campaign' onClick={this.hideSidebar}/>
           <SidebarLink title='Ideas' icon='lighter' route='/ideas' onClick={this.hideSidebar}/>
 
         </ul>

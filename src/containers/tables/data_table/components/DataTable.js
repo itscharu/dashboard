@@ -14,23 +14,18 @@ export default class DataTable extends PureComponent {
         width: 80
       },
       {
-        key: 'first',
-        name: 'First Name',
+        key: 'title',
+        name: 'Title',
         sortable: true
       },
       {
-        key: 'last',
-        name: 'Last Name',
+        key: 'author',
+        name: 'Submitted by',
         sortable: true
       },
       {
-        key: 'user',
-        name: 'Username',
-        sortable: true
-      },
-      {
-        key: 'age',
-        name: 'Age',
+        key: 'stage',
+        name: 'Stage',
         sortable: true
       },
       {
@@ -39,13 +34,13 @@ export default class DataTable extends PureComponent {
         sortable: true
       },
       {
-        key: 'location',
-        name: 'Location',
+        key: 'campaign',
+        name: 'Campaign',
         sortable: true
       },
       {
-        key: 'work',
-        name: 'Work',
+        key: 'tag',
+        name: 'Tags',
         sortable: true
       }
     ];
@@ -72,13 +67,12 @@ export default class DataTable extends PureComponent {
     for (let i = 1; i < numberOfRows + 1; i++) {
       rows.push({
         id: i,
-        first: ['Maria', 'Bobby  ', 'Alexander'][Math.floor((Math.random() * 3))],
-        last: ['Morisson', 'Brown  ', 'Medinberg'][Math.floor((Math.random() * 3))],
-        user: ['@dragon', '@hamster', '@cat'][Math.floor((Math.random() * 3))],
-        age: Math.min(100, Math.round(Math.random() * 30) + 20),
-        date: this.getRandomDate(new Date(2002, 3, 1), new Date(1954, 3, 1)),
-        location: ['Melbourne', 'Tokio', 'Moscow', 'Rome'][Math.floor((Math.random() * 4))],
-        work: ['Nova Soft', 'Dog Shop', 'Aspirity', 'Business Bro', 'Starlight'][Math.floor((Math.random() * 5))]
+        title: ['First Idea', 'Second Idea  ', 'Third Idea'][Math.floor((Math.random() * 3))],
+        author: ['Amit Yadav', 'Charu Agarwal  ', 'Prashant Poddar'][Math.floor((Math.random() * 3))],
+        stage: ['Accepted', 'In Progress', 'Delivered'][Math.floor((Math.random() * 3))],
+        date: this.getRandomDate(new Date(2018, 3, 1), new Date(2018, 9, 1)),
+        campaign: ['Expo 2018', 'Ideathon 2018', 'Hackovation 2018'][Math.floor((Math.random() * 3))],
+        tag: ['tech process', 'devops process', 'java performance', 'aws performance', 'process'][Math.floor((Math.random() * 5))]
       });
     }
     return rows;

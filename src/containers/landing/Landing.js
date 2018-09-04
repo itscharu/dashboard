@@ -9,7 +9,7 @@ import Purchase from './components/Purchase';
 import Footer from './components/Footer';
 import FeatureRequest from './components/FeatureRequest';
 
-const logo = process.env.PUBLIC_URL + '/img/landing/logo_svg.svg';
+const logo = process.env.PUBLIC_URL + '/img/landing/logo.png';
 
 export default class Landing extends PureComponent {
   render() {
@@ -45,9 +45,7 @@ export default class Landing extends PureComponent {
                       duration: 2500
                     })}>Features
                     </button>
-                    <a className='landing__btn' target='_blank' rel='noopener noreferrer'
-                       href='https://themeforest.net/item/easypro-developer-friendly-react-bootstrap-4-admin-template/21798550'>Buy
-                      now for $25</a>
+                    
                   </nav>
                 </div>
               </Col>

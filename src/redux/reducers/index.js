@@ -4,6 +4,7 @@ import cryptoTableReducer from './cryptoTableReducer';
 import newOrderTableReducer from './newOrderTableReducer';
 import customizerReducer from './customizerReducer';
 import pieChartReducer from './pieChartReducer';
+import ideasReducer from './ideasReducer'
 
 export {
   themeReducer,
@@ -11,5 +12,6 @@ export {
   cryptoTableReducer,
   newOrderTableReducer,
   customizerReducer,
-  pieChartReducer
+  pieChartReducer,
+  ideasReducer
 }

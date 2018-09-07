@@ -20,7 +20,7 @@ const renderTextField = ({input, label, meta: {touched, error}, children, select
       }}
     />
   );
-class CreateIdeaForm extends PureComponent {
+class UpdateIdeaForm extends PureComponent {
 
   render() {
     const {handleSubmit, reset} = this.props;
@@ -34,15 +34,16 @@ class CreateIdeaForm extends PureComponent {
             </div>
             <form className='material-form' onSubmit={handleSubmit}>
               <div>
-                <label className='material-form__label'>Title</label>
+                <label className='material-form__label'>Update Title</label>
                 <Field
                   name='subject'
                   component={renderTextField}
+                  disabled
                 />
               </div>            
                 <Row>
                 <Col>
-                <label className='material-form__label'>Add Tags</label> 
+                <label className='material-form__label'>Update Tags</label> 
               <Field
                     name='tags'
                     component={renderMultiSelectField}
@@ -53,16 +54,16 @@ class CreateIdeaForm extends PureComponent {
                 />
                 </Col>
                 <Col>
-                <label className='material-form__label'>Add Author</label> 
+                <label className='material-form__label'>Add Git Repo link</label> 
                 <Field
-                     name='author'
-                     type='email'                     
+                     name='gitRepos'
+                     type='url'                     
                      component={renderTextField}
-                     placeholder='Add Author'
+                     placeholder='Git repo link'
                 />
                 </Col>
                 <Col>
-                <label className='material-form__label'>Add Co-Authors separated by ,</label> 
+                <label className='material-form__label'>Update Co-Authors</label> 
                 <Field
                     name='coAuthors'
                     component={renderTextField}
@@ -72,12 +73,21 @@ class CreateIdeaForm extends PureComponent {
                 </Row>    
            
               <div>
-                <label className='material-form__label'>Write Your Idea</label>
+                <label className='material-form__label'>Update Your Idea</label>
                 <Field
                   name='description'
                   component='textarea'
                   placeholder='Type Idea here'
                   style={{width:'100%',height:'200px',marginBottom:'10px'}}
+                />
+              </div>
+              <div>
+                <label className='material-form__label'>Add Comments</label>
+                <Field
+                  name='comments'
+                  component='textarea'
+                  placeholder='Add comments'
+                  style={{width:'100%',height:'100px',marginBottom:'10px'}}
                 />
               </div>
               <div>
@@ -88,7 +98,7 @@ class CreateIdeaForm extends PureComponent {
                     />
               </div>
               <ButtonToolbar className='form__button-toolbar'>
-                <Button color='primary' type='submit'>Submit</Button>
+                <Button color='primary' type='submit'>Update</Button>
                 <Button type='button' onClick={reset}>Reset</Button>
               </ButtonToolbar>
             </form>
@@ -100,5 +110,5 @@ class CreateIdeaForm extends PureComponent {
 }
 
 export default reduxForm({
-  form: 'createIdea', // a unique identifier for this form
-})(CreateIdeaForm);
+  form: 'updateIdea', // a unique identifier for this form
+})(UpdateIdeaForm);

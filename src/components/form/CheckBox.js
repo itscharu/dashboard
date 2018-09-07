@@ -41,7 +41,7 @@ const renderCheckBoxField = (props) => (
     defaultChecked={props.defaultChecked}
     disabled={props.disabled}
     class={props.class}
-    color={props.color}
+    color={'grey'}
   />
 );
 

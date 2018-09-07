@@ -1,105 +1,111 @@
 import React, {PureComponent} from 'react';
-import {Card, CardBody, Col} from 'reactstrap';
-import EditTable from '../../../../components/table/EditableTable';
+import {Modal, ModalHeader, ModalBody,Button} from 'reactstrap';
+import UpdateIdeaForm from '../../../repository/components/UpdateIdeaForm'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {deleteIdea,updateIdea} from '../../../../redux/actions/ideasActions'
 import Pagination from '../../../../components/Pagination';
 
-export default class DataTable extends PureComponent {
-  
-  constructor(props) {
-    super(props);
-    this.heads = [
-      {
-        key: 'id',
-        name: '#',
-        width: 80
-      },
-      {
-        key: 'title',
-        name: 'Title',
-        sortable: true
-      },
-      {
-        key: 'author',
-        name: 'Submitted by',
-        sortable: true
-      },
-      {
-        key: 'stage',
-        name: 'Stage',
-        sortable: true
-      },
-      {
-        key: 'date',
-        name: 'Date',
-        sortable: true
-      },
-      {
-        key: 'campaign',
-        name: 'Campaign',
-        sortable: true
-      },
-      {
-        key: 'tag',
-        name: 'Tags',
-        sortable: true
-      }
-    ];
-    
-    this.state = {
-      rows: this.createRows(23),
-      pageOfItems: []
-    };
-    this.createRows = this.createRows.bind(this);
-    this.getRandomDate = this.getRandomDate.bind(this);
-    this.onChangePage = this.onChangePage.bind(this);
+const campaign=['expo 2018','hackovation','expo 2019'];
+const stage=['active','delivered','accepted'];
+class DataTable extends React.Component {
+  constructor(){
+    super();
+    this.state={modal: false,ideaToUpdate:{},ideas:[]}
   }
-  
-  onChangePage(pageOfItems) {
-    this.setState({pageOfItems: pageOfItems});
+  toggle=()=>{
+    this.setState({
+      modal: !this.state.modal
+    });
   }
-  
-  getRandomDate = (start, end) => {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString();
-  };
-  
-  createRows = (numberOfRows) => {
-    let rows = [];
-    for (let i = 1; i < numberOfRows + 1; i++) {
-      rows.push({
-        id: i,
-        title: ['First Idea', 'Second Idea  ', 'Third Idea'][Math.floor((Math.random() * 3))],
-        author: ['Amit Yadav', 'Charu Agarwal  ', 'Prashant Poddar'][Math.floor((Math.random() * 3))],
-        stage: ['Accepted', 'In Progress', 'Delivered'][Math.floor((Math.random() * 3))],
-        date: this.getRandomDate(new Date(2018, 3, 1), new Date(2018, 9, 1)),
-        campaign: ['Expo 2018', 'Ideathon 2018', 'Hackovation 2018'][Math.floor((Math.random() * 3))],
-        tag: ['tech process', 'devops process', 'java performance', 'aws performance', 'process'][Math.floor((Math.random() * 5))]
-      });
+  showResults=(values)=>{
+    window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+  }
+
+  handleRowClick=(idea)=>{
+    const {updateIdea}=this.props.actions
+  this.setState({modal:!this.state.modal})
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({ideas:nextProps.ideas})
+  }
+  //ideally this should be index but right now don't have it
+  handleIdeaDelete(subject){
+    console.log('in delete')
+    const {deleteIdea}=this.props.actions
+    deleteIdea(subject);
+  }
+  renderData=()=>{
+    let tags;
+    if(this.state.ideas.length>0){
+      return this.state.ideas.map((idea,index)=>{
+        if(idea.tags!=null){
+          tags=idea.tags.map((tag)=>{return tag.label}).toString();
+        }
+        else{
+          tags=''
+        }
+        return(<React.Fragment>
+        <tr onClick={()=>{this.handleRowClick(idea)}} key={index}>
+        <th scope="row">{Math.floor(Math.random()*10)}</th>
+        <td>{idea.subject}</td>
+        <td>{idea.author}</td>
+        <td>{stage[Math.floor(Math.random()*3)]}</td>
+        <td>{new Date().toDateString()}</td>
+        <td>{campaign[Math.floor(Math.random()*3)]}</td>
+        <td>{tags}</td>
+        </tr>
+        <Button onClick={()=>{this.handleIdeaDelete(idea.subject)}} color="danger" size="sm">Delete</Button>
+        </React.Fragment>
+        )
+        })
     }
-    return rows;
-  };
-  
-  render() {
-    return (
-      <Col md={12} lg={12}>
-        <Card>
-          <CardBody>
-            <div className='card__title'>
-              <h5 className='bold-text'>data table</h5>
-              <h5 className='subhead'>Use table with column's option <span className='red-text'>sortable</span></h5>
-            </div>
-            <p>Show
-              <select className='select-options'>
-                <option value='10'>10</option>
-                <option value='20'>20</option>
-                <option value='30'>30</option>
-              </select>
-              entries
-            </p>
-            <EditTable heads={this.heads} rows={this.state.rows}/>
-            <Pagination items={this.state.rows} onChangePage={this.onChangePage}/>
-          </CardBody>
-        </Card>
-      </Col>
-    )
+    else{
+     return <tr><td>No ideas available</td></tr>
+    }
+     
   }
+
+  render(){
+    return(<div>
+   <div>{this.state.modal&&<Modal style={{maxWidth:'70%'}} isOpen={this.state.modal} toggle={this.toggle}>
+   <ModalHeader toggle={this.toggle}></ModalHeader>
+   <ModalBody>
+   <UpdateIdeaForm onSubmit={this.showResults}/>
+   </ModalBody>
+ </Modal>}</div> 
+    <table className="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Submitted by</th>
+      <th scope="col">Stage</th>
+      <th scope="col">Date</th>
+      <th scope="col">Campaign</th>
+      <th scope="col">tags</th>
+    </tr>
+  </thead>
+  <tbody>
+{this.renderData()}
+  </tbody>
+</table>
+</div>)
+  }
+  
 }
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    actions: bindActionCreators({
+      deleteIdea,
+      updateIdea
+    }, dispatch)
+  };
+}
+const mapStateToProps=(state)=>{
+  return {
+    ideas: state.ideas
+  };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(DataTable);

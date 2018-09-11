@@ -11,7 +11,7 @@ export default class TopbarProfile extends PureComponent {
       <UncontrolledDropdown className='topbar__profile'>
         <DropdownToggle className='topbar__avatar'>
           <img className='topbar__avatar-img' src={Ava} alt='avatar'/>
-          <p className='topbar__avatar-name'>Roman Johanson</p>
+          <p className='topbar__avatar-name'>User</p>
           <DownIcon className='topbar__avatar-icon'/>
         </DropdownToggle>
         <DropdownMenu className='topbar__menu dropdown__menu'>

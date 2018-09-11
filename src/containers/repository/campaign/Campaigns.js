@@ -30,9 +30,9 @@ class Campaigns extends PureComponent {
           </Col>
         </Row>
         <Row>
-          <CardColumns >
-              <CampaignCard img={expoImg} />
-              <CampaignCard img={hackovationImg}/>
+          <CardColumns>
+              <CampaignCard img={expoImg} tabId='2'/>
+              <CampaignCard img={hackovationImg} tabId='3'/>
           </CardColumns>
         </Row>
       </Container>

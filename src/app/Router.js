@@ -74,7 +74,7 @@ import DefaultDashboard from '../containers/dashboards/default/DefaultDashboard'
 import ECommerceDashboard from '../containers/dashboards/e-commerce/ECommerceDashboard';
 import CryptoDashboard from '../containers/dashboards/crypto/CryptoDashboard';
 import Ideas from '../containers/repository/Ideas';
-import Campaigns from '../containers/repository/campaign/Campaigns'
+import Campaigns from '../containers/repository/campaign/Campaign'
 
 import Mail from '../containers/mail/Mail';
 

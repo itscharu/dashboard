@@ -1,5 +1,7 @@
-import {combineReducers, createStore} from 'redux';
+import {combineReducers, createStore,applyMiddleware} from 'redux';
 import {reducer as reduxFormReducer} from 'redux-form';
+import thunk from 'redux-thunk';
+
 import {
   cryptoTableReducer,
   newOrderTableReducer,
@@ -20,8 +22,6 @@ const reducer = combineReducers({
   select:pieChartReducer,
   ideas:ideasReducer
 });
-const store = (window.devToolsExtension
-  ? window.devToolsExtension()(createStore)
-  : createStore)(reducer);
+const store = createStore(reducer,applyMiddleware(thunk))
 
 export default store;

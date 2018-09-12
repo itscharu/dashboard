@@ -22,7 +22,20 @@ class Ideas extends PureComponent {
 
   showResults=(values)=>{
     const {createIdea}=this.props.actions
-    window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+    values.author={emailId:values.author}
+    if(values.tags!=undefined)
+    values.tags=values.tags.map(tag => {
+      return tag.label
+    });
+    if(values.coAuthors!=undefined){
+      values.coAuthors=values.coAuthors.split(/\s*,\s*/)
+      values.coAuthors=values.coAuthors.map((coAuthor)=>{
+        return {
+          'emailId':coAuthor
+        }
+      })
+    }
+    values.statusStr='NEW'
     createIdea(values);
     this.toggle();
   }

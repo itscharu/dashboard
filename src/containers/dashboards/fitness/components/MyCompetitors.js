@@ -16,37 +16,37 @@ export default class MyCompetitors extends PureComponent {
         <Link className='dashboard__competitor' to='/account/profile'>
           <div className='dashboard__competitor-info'>
             <p className='dashboard__competitor-name'>Idea 1</p>
-            <span class="badge badge-success">Delivered</span>
+            <span className="badge badge-success">Delivered</span>
           </div>
         </Link>
         <Link className='dashboard__competitor' to='/account/profile'>
         <div className='dashboard__competitor-info'>
           <p className='dashboard__competitor-name'>Idea 2</p>
-          <span class="badge badge-primary">Active</span>
+          <span className="badge badge-primary">Active</span>
         </div>
       </Link>
       <Link className='dashboard__competitor' to='/account/profile'>
       <div className='dashboard__competitor-info'>
         <p className='dashboard__competitor-name'>Idea 3</p>
-        <span class="badge badge-info">Accepted</span>
+        <span className="badge badge-info">Accepted</span>
       </div>
     </Link>
     <Link className='dashboard__competitor' to='/account/profile'>
     <div className='dashboard__competitor-info'>
       <p className='dashboard__competitor-name'>Idea 4</p>
-      <span class="badge badge-success">Delivered</span>
+      <span className="badge badge-success">Delivered</span>
     </div>
   </Link>
   <Link className='dashboard__competitor' to='/account/profile'>
   <div className='dashboard__competitor-info'>
     <p className='dashboard__competitor-name'>Idea 5</p>
-    <span class="badge badge-info">Accepted</span>
+    <span className="badge badge-info">Accepted</span>
   </div>
 </Link>
 <Link className='dashboard__competitor' to='/account/profile'>
 <div className='dashboard__competitor-info'>
   <p className='dashboard__competitor-name'>Idea 6</p>
-  <span class="badge badge-primary">Active</span>
+  <span className="badge badge-primary">Active</span>
 </div>
 </Link>
 </Panel>

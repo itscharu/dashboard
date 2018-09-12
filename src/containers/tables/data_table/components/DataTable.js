@@ -1,17 +1,19 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {Modal, ModalHeader, ModalBody,Button} from 'reactstrap';
 import UpdateIdeaForm from '../../../repository/components/UpdateIdeaForm'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {deleteIdea,updateIdea} from '../../../../redux/actions/ideasActions'
+import {getAllIdeas,deleteIdea,updateIdea} from '../../../../redux/actions/ideasActions'
 import Pagination from '../../../../components/Pagination';
 
-const campaign=['expo 2018','hackovation','expo 2019'];
-const stage=['active','delivered','accepted'];
 class DataTable extends React.Component {
   constructor(){
     super();
     this.state={modal: false,ideaToUpdate:{},ideas:[]}
+  }
+  componentWillMount(){
+    const {getAllIdeas}=this.props.actions;
+    getAllIdeas();
   }
   toggle=()=>{
     this.setState({
@@ -19,44 +21,88 @@ class DataTable extends React.Component {
     });
   }
   showResults=(values)=>{
-    window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+    console.log(values)
+    const {updateIdea}=this.props.actions
+    if(values.tags!=undefined)
+    values.tags=values.tags.map(tag => {
+      return tag.label
+    });
+    if(values.coAuthors!=undefined){
+      values.coAuthors=values.coAuthors.split(/\s*,\s*/)
+      values.coAuthors=values.coAuthors.map((coAuthor)=>{
+        return {
+          'emailId':coAuthor
+        }
+      })
+    }
+    if(values.mentors!=undefined){
+    values.mentors=values.mentors.split(/\s*,\s*/)
+    values.mentors=values.mentors.map((mentor)=>{
+      return {
+        'emailId':mentor
+      }
+    })
+  }
+  if(values.gitRepos!=undefined){
+  values.gitRepos=values.gitRepos.split(/\s*,\s*/)
+  values.gitRepos=values.gitRepos.map((gitRepo)=>{
+    return gitRepo
+  })
+}
+  if(values.sponsors!=undefined){
+  values.sponsors=values.sponsors.split(/\s*,\s*/)
+  values.sponsors=values.sponsors.map((sponsor)=>{
+    return {
+      'emailId':sponsor
+    }
+  })
+}
+  updateIdea(values);
+  this.toggle();
   }
 
-  handleRowClick=(idea)=>{
-    const {updateIdea}=this.props.actions
-  this.setState({modal:!this.state.modal})
+  handleRowClick=(ideaToUpdate)=>{   
+    if(ideaToUpdate.coAuthors!=undefined){
+      ideaToUpdate.coAuthors=ideaToUpdate.coAuthors.map((coAuthor)=>{
+        return coAuthor.emailId;
+      })
+    }
+    this.setState({modal:!this.state.modal,ideaToUpdate})
   }
 
   componentWillReceiveProps(nextProps){
     this.setState({ideas:nextProps.ideas})
   }
   //ideally this should be index but right now don't have it
-  handleIdeaDelete(subject){
+  handleIdeaDelete(id){
     console.log('in delete')
     const {deleteIdea}=this.props.actions
-    deleteIdea(subject);
+    deleteIdea(id);
   }
-  renderData=()=>{
-    let tags;
+  RenderData=()=>{
+    let coAuthors=[];
     if(this.state.ideas.length>0){
       return this.state.ideas.map((idea,index)=>{
-        if(idea.tags!=null){
-          tags=idea.tags.map((tag)=>{return tag.label}).toString();
-        }
-        else{
-          tags=''
-        }
-        return(<React.Fragment>
-        <tr onClick={()=>{this.handleRowClick(idea)}} key={index}>
-        <th scope="row">{Math.floor(Math.random()*10)}</th>
+       console.log(idea)
+       if(idea.coAuthors!=undefined){
+         coAuthors=idea.coAuthors.map((coAuthor)=>{
+           return coAuthor.emailId;
+         })
+       }
+       
+        return(<React.Fragment key={index}>
+        <tr key={index}>
+        <th scope="row">{idea.id}</th>
         <td>{idea.subject}</td>
-        <td>{idea.author}</td>
-        <td>{stage[Math.floor(Math.random()*3)]}</td>
-        <td>{new Date().toDateString()}</td>
-        <td>{campaign[Math.floor(Math.random()*3)]}</td>
-        <td>{tags}</td>
+        <td>{idea.author?idea.author.emailId:'No Author'}</td>
+        <td>{idea.statusStr}</td>
+        <td>{new Date(idea.updated).toDateString()}</td>
+        <td>{coAuthors?coAuthors.toString():'fdfd'}</td>
+        <td>{idea.tags?idea.tags.toString():''}</td>
+        <td><Button onClick={()=>{this.handleIdeaDelete(idea.id)}} color="danger" size="xs">Delete</Button></td>
+        <td><Button onClick={()=>{this.handleRowClick(idea)}} color="info" size="xs">Update</Button></td>
         </tr>
-        <Button onClick={()=>{this.handleIdeaDelete(idea.subject)}} color="danger" size="sm">Delete</Button>
+        
         </React.Fragment>
         )
         })
@@ -72,7 +118,7 @@ class DataTable extends React.Component {
    <div>{this.state.modal&&<Modal style={{maxWidth:'70%'}} isOpen={this.state.modal} toggle={this.toggle}>
    <ModalHeader toggle={this.toggle}></ModalHeader>
    <ModalBody>
-   <UpdateIdeaForm onSubmit={this.showResults}/>
+   <UpdateIdeaForm initialValues={this.state.ideaToUpdate} onSubmit={this.showResults}/>
    </ModalBody>
  </Modal>}</div> 
     <table className="table">
@@ -81,14 +127,14 @@ class DataTable extends React.Component {
       <th scope="col">#</th>
       <th scope="col">Title</th>
       <th scope="col">Submitted by</th>
-      <th scope="col">Stage</th>
-      <th scope="col">Date</th>
-      <th scope="col">Campaign</th>
-      <th scope="col">tags</th>
+      <th scope="col">Status</th>
+      <th scope="col">Last Updated</th>
+      <th scope="col">Co-Authors</th>
+      <th scope="col">Tags</th>
     </tr>
   </thead>
   <tbody>
-{this.renderData()}
+    <this.RenderData/>
   </tbody>
 </table>
 </div>)
@@ -98,12 +144,14 @@ class DataTable extends React.Component {
 const mapDispatchToProps=(dispatch)=>{
   return {
     actions: bindActionCreators({
+      getAllIdeas,
       deleteIdea,
       updateIdea
     }, dispatch)
   };
 }
 const mapStateToProps=(state)=>{
+  console.log(state)
   return {
     ideas: state.ideas
   };

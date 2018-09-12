@@ -18,10 +18,15 @@ export default class EditableTable extends PureComponent {
     this.rowGetter = this.rowGetter.bind(this);
     this.handleGridRowsUpdated = this.handleGridRowsUpdated.bind(this);
     this.handleGridSort = this.handleGridSort.bind(this);
+    this.handleRowSelect=this.handleRowSelect.bind(this);
   }
   
   componentDidMount(){
   
+  }
+
+  handleRowSelect=()=>{
+    console.log('clicked')
   }
   
   handleGridRowsUpdated = ({fromRow, toRow, updated}) => {
@@ -60,6 +65,7 @@ export default class EditableTable extends PureComponent {
       <div className='table'>
         <ReactDataGrid
           onGridSort={this.handleGridSort}
+          onRowSelect={this.handleRowSelect}
           enableCellSelect={true}
           columns={this.props.heads}
           rowGetter={this.rowGetter}

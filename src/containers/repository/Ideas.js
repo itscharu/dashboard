@@ -1,10 +1,9 @@
 import React, {PureComponent} from 'react';
-import {Col, Container, Row, Button,ButtonToolbar, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import Select from 'react-select';
+import {Col, Container, Row, Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {createIdea} from '../../redux/actions/ideasActions'
 import CreateIdeaForm from './components/CreateIdeaForm'
-import showResults from './components/showFormResults'
 import DataTable from '../tables/data_table/components/DataTable'
 
 class Ideas extends PureComponent {
@@ -20,27 +19,29 @@ class Ideas extends PureComponent {
       modal: !this.state.modal
     });
   }
+
+  showResults=(values)=>{
+    const {createIdea}=this.props.actions
+    window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+    createIdea(values);
+    this.toggle();
+  }
+
   render() {
-   
     return (
       <Container className='dashboard'>
         <Row>
           <Col md={12}>
             <h3 className='page-title'>Ideas</h3>
           </Col>
-          <Col lg={3} md={4} sm={6} xs={6}>
-                <div>
+          <Col>
         <Button color="danger" onClick={this.toggle}>New Idea</Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Ideate2Innovate</ModalHeader>
+        <Modal style={{maxWidth:'70%'}} isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}></ModalHeader>
           <ModalBody>
-          <CreateIdeaForm onSubmit={showResults}/>
+          <CreateIdeaForm onSubmit={this.showResults}/>
           </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
         </Modal>
-      </div>
           </Col>         
         </Row>       
         <Row>
@@ -50,11 +51,17 @@ class Ideas extends PureComponent {
         </div>
         </Col>
         </Row>
-      </Container>
-      
-      
+      </Container>    
     )
   }
 }
 
-export default connect()(Ideas);
+ 
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    actions: bindActionCreators({
+      createIdea
+    }, dispatch)
+  };
+}
+export default connect(null,mapDispatchToProps)(Ideas);

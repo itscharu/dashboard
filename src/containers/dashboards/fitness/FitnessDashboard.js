@@ -1,12 +1,9 @@
 import React, {PureComponent} from 'react';
 import {Col, Container, Row, Button,ButtonToolbar, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import ActivityChart from './components/ActivityChart';
-import ActivityRating from './components/ActivityRating';
-import FatBurning from './components/FatBurning';
 import Delivered from './components/Delivered';
 import Accepted from './components/Accepted';
 import Active from './components/Active';
-import TodayRunningMap from './components/TodayRunningMap';
 import MyCompetitors from './components/MyCompetitors';
 import Select from 'react-select';
 import { selectValueDropDown } from "../../../redux/actions/pieChartActions";
@@ -32,14 +29,13 @@ class FitnessDashboard extends PureComponent {
   
   render() {
     const { selectedOption } = this.props.selectState;
-    const {handleSubmit, reset} = this.props;
     return (
       <Container className='dashboard'>
         <Row>
           <Col md={12}>
             <h3 className='page-title'>Dashboard</h3>
           </Col>
-          <Col lg={3} md={4} sm={6} xs={6}>
+          <Col style={{marginBottom:'20px'}} lg={3} md={4} sm={6} xs={6}>
           <Select
                   value={selectedOption}
                   onChange={this.handleChange}

@@ -3,6 +3,7 @@ import {Card, Col, Nav, NavItem, NavLink, TabContent, TabPane} from 'reactstrap'
 import classnames from 'classnames';
 import Campaigns from './Campaigns';
 import TabContext from './tabContext';
+import ExpoContent from './components/ExpoContent'
 
 export default class Campaign extends PureComponent {
   constructor(props) {
@@ -67,10 +68,12 @@ export default class Campaign extends PureComponent {
                   <Campaigns/>
                 </TabPane>
                 <TabPane tabId='2'>
-                  <h5>Expo 2018 content </h5>
+                    <ExpoContent/>                  
                 </TabPane>
                 <TabPane tabId='3'>
-                  <h5>content for hackovation</h5> 
+                <p>
+                    For more information please go through <a href="https://vox.publicis.sapient.com/groups/wellington-hackovation-20">this VOX Page</a>
+                </p>
                 </TabPane>
               </TabContent>
             </div>

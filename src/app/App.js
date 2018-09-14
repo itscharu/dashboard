@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../scss/app.scss';
-
+import {getAllIdeas} from '../redux/actions/ideasActions'
 import Router from './Router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class App extends Component {
   constructor() {
@@ -12,6 +14,7 @@ class App extends Component {
       loaded: false
     }
   }
+  
   
   componentDidMount() {
     window.addEventListener('load', () => {
@@ -38,5 +41,7 @@ class App extends Component {
     )
   }
 }
+
+
 
 export default App;

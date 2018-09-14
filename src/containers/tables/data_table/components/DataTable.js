@@ -1,5 +1,7 @@
 import React from 'react';
-import {Modal, ModalHeader, ModalBody,Button} from 'reactstrap';
+import {Modal, ModalHeader, ModalBody,Button,Card, CardImg, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle,Col,Row} from 'reactstrap';
+import {Link} from 'react-router-dom';
 import UpdateIdeaForm from '../../../repository/components/UpdateIdeaForm'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -75,7 +77,6 @@ class DataTable extends React.Component {
   }
   //ideally this should be index but right now don't have it
   handleIdeaDelete(id){
-    console.log('in delete')
     const {deleteIdea}=this.props.actions
     deleteIdea(id);
   }
@@ -91,24 +92,24 @@ class DataTable extends React.Component {
        }
        
         return(<React.Fragment key={index}>
-        <tr key={index}>
-        <th scope="row">{idea.id}</th>
-        <td>{idea.subject}</td>
-        <td>{idea.author?idea.author.emailId:'No Author'}</td>
-        <td>{idea.statusStr}</td>
-        <td>{new Date(idea.updated).toDateString()}</td>
-        <td>{coAuthors?coAuthors.toString():'fdfd'}</td>
-        <td>{idea.tags?idea.tags.toString():''}</td>
-        <td><Button onClick={()=>{this.handleIdeaDelete(idea.id)}} color="danger" size="xs">Delete</Button></td>
-        <td><Button onClick={()=>{this.handleRowClick(idea)}} color="info" size="xs">Update</Button></td>
-        </tr>
-        
+      <Col sm={6} md={4} lg={4}>
+      <Card body outline color="danger">
+        <CardBody>
+          <CardTitle style={{fontWeight:'bolder'}}>{idea.subject}</CardTitle>
+          <CardSubtitle style={{fontStyle:'italic'}}>{idea.author?idea.author.emailId:'No Author'}</CardSubtitle>
+        </CardBody>
+        <CardBody>
+          <CardText>{idea.description?idea.description.toString().substring(0,100):'No description available'}</CardText>
+          <Link  to={`/idea/${idea.id}`}>Details</Link>
+        </CardBody>
+      </Card>
+      </Col>   
         </React.Fragment>
         )
         })
     }
     else{
-     return <tr><td>No ideas available</td></tr>
+     return <React.Fragment>No ideas available</React.Fragment>
     }
      
   }
@@ -121,22 +122,9 @@ class DataTable extends React.Component {
    <UpdateIdeaForm initialValues={this.state.ideaToUpdate} onSubmit={this.showResults}/>
    </ModalBody>
  </Modal>}</div> 
-    <table className="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Submitted by</th>
-      <th scope="col">Status</th>
-      <th scope="col">Last Updated</th>
-      <th scope="col">Co-Authors</th>
-      <th scope="col">Tags</th>
-    </tr>
-  </thead>
-  <tbody>
-    <this.RenderData/>
-  </tbody>
-</table>
+    <Row><this.RenderData/></Row>
+    
+
 </div>)
   }
   

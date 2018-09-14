@@ -14,7 +14,7 @@ export default function (state = [], action) {
         return state;
 
         case GET_ALL_IDEAS_SUCCESS:
-        return state.concat(action.payload)
+        return action.payload
 
         case UPDATE_SUCCESSFUL:
          let newState=state.filter((idea)=>{idea.id!=action.payload.id})
@@ -23,9 +23,7 @@ export default function (state = [], action) {
         case DELETE_IDEA_SUCCESS:
         
         return state.filter((idea)=>{return idea.id!=action.payload.id})
-
-        case UPDATE_SUCCESSFUL:
-        return state
+        
       default:
         return state;
     }

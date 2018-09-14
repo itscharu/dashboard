@@ -5,6 +5,16 @@ import { bindActionCreators } from 'redux';
 import {createIdea} from '../../redux/actions/ideasActions'
 import CreateIdeaForm from './components/CreateIdeaForm'
 import DataTable from '../tables/data_table/components/DataTable'
+import {Field} from 'redux-form';
+import IdeaSearch from './IdeaSearch';
+
+const renderTextField = ({input, type,placeholder, meta: {touched, error}}) => (
+  <div className='form__form-group-input-wrap'>
+  <input style={styleInputBox} {...input} placeholder={placeholder} type={type}/>
+  {touched && error && <span style={{color:'red'}}>{error}</span>}
+  </div>
+  )
+const styleInputBox={border: 'none',borderBottom: '1px solid #ccc',width:'100%',padding: '12px 20px',margin: '8px 0',boxSizing: 'border-box'}
 
 class Ideas extends PureComponent {
   constructor(){
@@ -39,6 +49,7 @@ class Ideas extends PureComponent {
     createIdea(values);
     this.toggle();
   }
+  
 
   render() {
     return (
@@ -46,6 +57,7 @@ class Ideas extends PureComponent {
         <Row>
           <Col md={12}>
             <h3 className='page-title'>Ideas</h3>
+            <IdeaSearch/>
           </Col>
           <Col>
         <Button color="danger" onClick={this.toggle}>New Idea</Button>

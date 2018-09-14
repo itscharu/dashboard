@@ -26,7 +26,7 @@ export default class Landing extends PureComponent {
                   <nav className='landing__menu-nav'>
                     <button
                       onClick={() => scrollToComponent(this.About, {offset: -50, align: 'top', duration: 1000})}>About
-                      EasyDEV
+                      Ideate
                     </button>
                     <button
                       onClick={() => scrollToComponent(this.Demos, {offset: -50, align: 'top', duration: 1500})}>Demos
